@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpEindProduct.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,18 @@ namespace CSharpEindProduct
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MenuViewModel();
+        }
+
+        private void MenuView_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new MenuViewModel();
+        }
+
+        
+        private void CreditsView_Clicked(object sender, RoutedEventArgs e)
+        {
+            DataContext = new CreditsViewModel();
         }
     }
 }

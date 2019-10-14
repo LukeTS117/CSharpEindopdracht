@@ -4,9 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharpEindProduct"
+        xmlns:viewmodels="clr-namespace:CSharpEindProduct.ViewModels"
+        xmlns:views="clr-namespace:CSharpEindProduct.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Bomberman" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <DataTemplate x:Name="menuTemplate" DataType="{x:Type viewmodels:MenuViewModel}">
+            <views:Menu DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="creditsTemplate" DataType="{x:Type viewmodels:CreditsViewModel}">
+            <views:Credits DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Background="LightGray" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5">
+            <StackPanel>
+                <Button Content="MenuView" Click="MenuView_Clicked"/>
+                <Button Content="CeditView" Click="CreditsView_Clicked"/>
+            </StackPanel>
+        </DockPanel>
+
+        <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="5" Content="{Binding}"/>
+
     </Grid>
 </Window>

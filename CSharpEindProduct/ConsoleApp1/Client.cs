@@ -10,7 +10,7 @@ namespace Client
     class Client
     {
 
-        private static string hostname = "localhost";
+        private static string hostname = "192.168.178.117";
         private static int port = 1337;
         bool done;
 
@@ -23,7 +23,7 @@ namespace Client
 
         public Client()
         {
-            TcpClient client = new TcpClient();
+            client = new TcpClient();
             client.Connect(hostname, port);
             NetworkStream nws = client.GetStream();
 
