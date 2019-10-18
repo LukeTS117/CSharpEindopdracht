@@ -16,27 +16,18 @@ using System.Windows.Shapes;
 namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for Menu.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class Menu : UserControl
+    public partial class CreditsView : Page
     {
-
-        
-        public Menu()
+        public CreditsView()
         {
             InitializeComponent();
         }
 
-        private void TextGotFocus(object sender, RoutedEventArgs e)
+        private void Button_Back_Down(object sender, MouseButtonEventArgs e)
         {
-            TextBox tb = e.Source as TextBox;
-            tb.Background = Brushes.Red;
-        }
-
-        private void TextLostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox tb = e.Source as TextBox;
-            tb.Background = Brushes.Red;
+            this.NavigationService.GoBack();
         }
     }
 }

@@ -68,7 +68,7 @@ namespace ServerClient
 
                 if(read == 0)
                 {
-                    throw new Exception("Lost Connection during read!");
+                     throw new Exception("Lost Connection during read!");
                 }
 
                 readCount += read;

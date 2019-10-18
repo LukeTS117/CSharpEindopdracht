@@ -16,13 +16,15 @@ using System.Windows.Shapes;
 namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for Lobby.xaml
     /// </summary>
-    public partial class Credits : UserControl
+    public partial class Lobby : Page
     {
-        public Credits()
+        public Lobby()
         {
             InitializeComponent();
         }
+
+        
     }
 }

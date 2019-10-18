@@ -1,5 +1,4 @@
-﻿using CSharpEindProduct.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CSharpEindProduct
+namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Username.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Username : Page
     {
-        public MainWindow()
+        public Username()
         {
             InitializeComponent();
-
-            MainFrame.NavigationService.Navigate(new Views.MenuView());
-
         }
 
-        
+        private void Button_Back_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            this.NavigationService.GoBack();
+        }
+
+        private void UserNameTextBoX_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+
+            }
+        }
     }
 }

@@ -17,10 +17,28 @@ namespace Server
         private static int port = 1337;
         private object _sync = new object();
         private int clientID;
+        private int sessionID;
+        private int maxPlayers;
 
         private ConcurrentDictionary<int, TcpClient> lobby;
         
 
+        class Session
+        {
+           private ConcurrentDictionary<int, TcpClient> _session;
+
+            void AddPlayer(int clientID, TcpClient client)
+            {
+                this._session.TryAdd(clientID, client);
+            }
+
+            TcpClient RemovePlayer(int clientID)
+            {
+                TcpClient client;
+                this._session.TryRemove(clientID, out client);
+                return client;
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -31,6 +49,8 @@ namespace Server
         {
             running = true;
             clientID = 0;
+            sessionID = 0;
+            maxPlayers = 4;
 
             lobby = new ConcurrentDictionary<int, TcpClient>();
             listener = new TcpListener(ipAdress, port);

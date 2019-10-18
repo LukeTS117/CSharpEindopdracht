@@ -1,0 +1,19 @@
+﻿<Page x:Class="CSharpEindProduct.Views.Username"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CSharpEindProduct.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1250"
+      Title="Username">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/CSharpEindProduct;component/Resources/MenuBackground.jpg"/>
+        </Grid.Background>
+        <TextBox x:Name="UserNameTextBox" HorizontalAlignment="Center" Height="23" Margin="0,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontFamily="Stencil" FontSize="20" AutomationProperties.HelpText="Username" KeyDown="UserNameTextBoX_KeyDown"/>
+        <TextBlock HorizontalAlignment="Center" Margin="530.781,280.568,520.581,396.768" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Center" RenderTransformOrigin="0.2,-1.212" UseLayoutRounding="False" FontFamily="Stencil" FontSize="36"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="10,40,0,0" VerticalAlignment="Top" Width="100" Source="/CSharpEindProduct;component/Resources/Back.png" RenderTransformOrigin="0.064,0.474" MouseDown="Button_Back_MouseDown"/>
+    </Grid>
+</Page>
