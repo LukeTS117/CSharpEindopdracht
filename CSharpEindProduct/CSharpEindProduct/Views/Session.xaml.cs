@@ -12,28 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LibClient;
 
 namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for Lobby.xaml
+    /// Interaction logic for Session.xaml
     /// </summary>
-    public partial class Lobby : Page
+    public partial class Session : Page
     {
-
-        Client client;
-
-        public Lobby(Client client)
+        public Session()
         {
-            this.client = client;
             InitializeComponent();
-
         }
 
-        private void AddSessionMouseDown(object sender, MouseButtonEventArgs e)
+        private void StartButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+
         }
     }
 }

@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static ServerClient.ServerClient;
 
-namespace Client
+namespace LibClient
 {
-    class Client
+    public class Client
     {
-
         private static string hostname = "192.168.178.117";
         private static int port = 1337;
         bool done;
@@ -18,28 +15,20 @@ namespace Client
 
         TcpClient client;
 
-        static void Main(string[] args)
-        {
-            new Client();
-        }
-
-        public Client()
+        public Client(string username)
         {
             client = new TcpClient();
             client.Connect(hostname, port);
             NetworkStream nws = client.GetStream();
+            Username = username;
 
-            Console.WriteLine("Connected to Server");
+            //Console.WriteLine("Connected to Server");
 
 
             Thread thread = new Thread(HandleRead);
             thread.Start(nws);
             done = false;
-            while (!done)
-            {
-                string input = Console.ReadLine();
-                SendTaggedMessage(nws, Tag.msg, input);
-            }
+            SendTaggedMessage(nws, Tag.sun, Username);
         }
 
         public async void HandleRead(object o)
@@ -55,12 +44,12 @@ namespace Client
                 TaggedMessage msg = await read;
                 HandlePacket(msg);
             }
-            
+
 
         }
 
 
-        public static void HandlePacket(TaggedMessage taggedmsg)
+        private static void HandlePacket(TaggedMessage taggedmsg)
         {
             switch (taggedmsg.tag)
             {
@@ -75,5 +64,14 @@ namespace Client
             }
         }
 
+        private static void SendMessage(Tag tag, string message)
+        {
+
+        }
+
+        private static void SendMessage(Tag tag)
+        {
+
+        }
     }
 }

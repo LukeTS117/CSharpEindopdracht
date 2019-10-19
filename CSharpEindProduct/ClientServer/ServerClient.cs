@@ -2,8 +2,7 @@
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
-
-
+using System.Threading.Tasks;
 
 namespace ServerClient
 {
@@ -12,16 +11,27 @@ namespace ServerClient
         /* Data Protocol 
  * 
  *  From Client:                    param:
- *     <loc> = location             (float x, float y) 
- *     <dir> = direction            (byte)  
- *     <msg> = text message         (String)
- *     <bmb> = bomb placed          (byte x, byte y)
- *     <exp> = exploded             (byte) 
- *     <ded> = dead                 -
+ *     <loc> = location                 (float x, float y) 
+ *     <dir> = direction                (byte)  
+ *     <msg> = text message             (String)
+ *     <bmb> = bomb placed              (byte x, byte y)
+ *     <exp> = exploded                 (byte) 
+ *     <ded> = dead                     -
+ *     <sun> = set username             string
+ *     <cns> = creat new session        -
+ *     <jas> = join available session   int
+ *     
+ *  From Server:                    param:
+ *     <nsl> = notify session list      (int sessionid, int playeramount)
+ *     <npj> = notify player join       (int, string)
+ *     <npl> = notify player left       (int)
  */
+
         public enum Tag
         {
-            loc = 1, dir = 2, msg = 3, bmb = 4, exp = 5, ded = 6
+            loc, dir, msg, bmb, exp, ded, sun, cns, jas,
+
+            nsl, npj, npl
         }
 
 
@@ -91,7 +101,7 @@ namespace ServerClient
         }
 
 
-        public static TaggedMessage ReadTaggedMessage(NetworkStream nws)
+        public async static Task<TaggedMessage> ReadTaggedMessageAsync(NetworkStream nws)
         {
             byte[] lengthBytes = ReadBytes(nws, sizeof(int));
             int length = BitConverter.ToInt32(lengthBytes, 0);

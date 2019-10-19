@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using static ServerClient.ServerClient;
 
 namespace Server
@@ -20,23 +21,56 @@ namespace Server
         private int sessionID;
         private int maxPlayers;
 
-        private ConcurrentDictionary<int, TcpClient> lobby;
-        
+        private ConcurrentDictionary<int, Player> lobby;
+        private ConcurrentDictionary<int, Session> sessions;
 
-        class Session
+        public class Session
         {
-           private ConcurrentDictionary<int, TcpClient> _session;
+           private ConcurrentDictionary<int, Player> _session;
+           public int iPlayers;
+           public int SessionID;
 
-            void AddPlayer(int clientID, TcpClient client)
+            public Session(int sessionID)
             {
-                this._session.TryAdd(clientID, client);
+                _session = new ConcurrentDictionary<int, Player>();
+                iPlayers = 0;
+                SessionID = sessionID;
             }
 
-            TcpClient RemovePlayer(int clientID)
+            public void AddPlayer(ConcurrentDictionary<int, Player> currentlobby, Player player)
             {
-                TcpClient client;
-                this._session.TryRemove(clientID, out client);
-                return client;
+                if (this._session.TryAdd(player.ID, player))
+                {
+                    Player outPlayer;
+                    currentlobby.TryRemove(player.ID, out outPlayer);
+                    ++iPlayers;
+                };
+            }
+
+            public Player RemovePlayer(int playerID)
+            {
+                Player player;
+                this._session.TryRemove(playerID, out player);
+                --iPlayers;
+                return player;
+            }
+
+            public void NotifyList()
+            {
+
+            }
+        }
+
+        public class Player
+        {
+            public TcpClient Client { get; }
+            public int ID { get; }
+            public string UserName { get; set; }
+
+            public Player(TcpClient client, int iD)
+            {
+                Client = client;
+                ID = iD;
             }
         }
 
@@ -52,74 +86,89 @@ namespace Server
             sessionID = 0;
             maxPlayers = 4;
 
-            lobby = new ConcurrentDictionary<int, TcpClient>();
+            lobby = new ConcurrentDictionary<int, Player>();
             listener = new TcpListener(ipAdress, port);
             listener.Start();
             Console.WriteLine("Start Listening...");
 
-            Thread t = new Thread(BroadcastThread);
-            t.Start();
+            //Thread t = new Thread(BroadcastThread);
+            //t.Start();
 
             while (running)
             {
                 TcpClient client = listener.AcceptTcpClient();
                 int key = this.GenerateClientID();
-                lobby.TryAdd(key , client);
 
-                Thread thread = new Thread(HandleTcpClient);
+                Player player = new Player(client, key);
+                lobby.TryAdd(key , player);
+
+                Thread thread = new Thread(HandlePlayerClient);
                 thread.Start(lobby.GetValueOrDefault(key));
             }
             
         }
 
-        private void BroadcastThread()
-        {
-            while (running)
-            {
-                string input = Console.ReadLine();
-                BroadCast(input);
-            }
+        //private void BroadcastThread()
+        //{
+        //    while (running)
+        //    {
+        //        string input = Console.ReadLine();
+        //        BroadCast(input);
+        //    }
             
-        }
+        //}
 
-        private void HandleTcpClient(object obj)
+        private async void HandlePlayerClient(object obj)
         {
-            
-            TcpClient client = obj as TcpClient;
-            if (client == null)
+
+            Player player = obj as Player;
+            if (player == null)
                 return;
 
-            Console.WriteLine("Client connected");
+            Console.WriteLine($"<{player.ID}>Client connected");
 
-            NetworkStream nws = client.GetStream();
+            NetworkStream nws = player.Client.GetStream();
             SendTaggedMessage(nws, Tag.msg,"Testing... Attention please!");
 
             bool done = false;
             while (!done)
             {
-                TaggedMessage recieved = ReadTaggedMessage(nws);
-                this.HandleMessage(client, recieved);
+                Task<TaggedMessage> read = ReadTaggedMessageAsync(nws);
+                TaggedMessage recieved = await read;
+                this.HandleMessage(player, recieved);
+
             }
 
 
-            client.Close();
+            player.Client.Close();
             Console.WriteLine("Connection closed");
             nws.Close();
             Console.WriteLine("Networkstream closed");
         }
 
-        public void HandleMessage(TcpClient client, TaggedMessage taggedmsg)
+        public void HandleMessage(Player player, TaggedMessage taggedmsg)
         {
 
             switch (taggedmsg.tag)
             {
                 case Tag.msg:
-                    Console.WriteLine(taggedmsg.tag);
-                    Console.WriteLine(taggedmsg.message);
+                    Console.WriteLine($"<{player.ID}>" + taggedmsg.tag);
+                    Console.WriteLine($"<{player.ID}>" + taggedmsg.message);
+                    break;
+                case Tag.sun:
+                    player.UserName = taggedmsg.message;
+                    break;
+                case Tag.cns:
+                    int newSessionID = ++sessionID;
+                    Session newSession = new Session(newSessionID);
+                    newSession.AddPlayer(lobby, player);
+                    sessions.TryAdd(newSessionID, newSession);
+                    break;
+                case Tag.jas:
                     break;
                 default:
-                    Console.WriteLine("Something went Wrong in the Tag...");
-                    Console.WriteLine(taggedmsg.tag);
+                    Console.WriteLine($"<{player.ID}>" + "Something went Wrong in the Tag...");
+                    Console.WriteLine($"<{player.ID}>" + taggedmsg.tag);
                     break;
             }        
         }
@@ -139,15 +188,15 @@ namespace Server
             return clientID++;
         }
 
-        public void BroadCast(string input)
+        public void BroadCast(ConcurrentDictionary<int, Player> players, Tag tag, string message)
         {
-            foreach(var entry in lobby)
+            foreach(var entry in players)
             {
-                TcpClient client = entry.Value as TcpClient;
+                Player player = entry.Value as Player;
 
-                NetworkStream nws = client.GetStream();
+                NetworkStream nws = player.Client.GetStream();
 
-                SendTaggedMessage(nws, Tag.msg, input);
+                SendTaggedMessage(nws, tag, message);
             }
         }
        
@@ -159,12 +208,20 @@ namespace Server
 /* Data Protocol 
  * 
  *  From Client:                    param:
- *     <loc> = location             (float x, float y) 
- *     <dir> = direction            (byte)  
- *     <msg> = text message         (String)
- *     <bmb> = bomb placed          (byte x, byte y)
- *     <exp> = exploded             (byte) 
- *     <ded> = dead                 -
+ *     <loc> = location                 (float x, float y) 
+ *     <dir> = direction                (byte)  
+ *     <msg> = text message             (String)
+ *     <bmb> = bomb placed              (byte x, byte y)
+ *     <exp> = exploded                 (byte) 
+ *     <ded> = dead                     -
+ *     <sun> = set username             string
+ *     <cns> = creat new session        -
+ *     <jas> = join available session   int
+ *     
+ *  From Server:                    param:
+ *     <nsl> = notify session list      (int sessionid, int playeramount)
+ *     <npj> = notify player join       (int, string)
+ *     <npl> = notify player left       (int)
  */
 
 
@@ -172,8 +229,8 @@ namespace Server
  * 
  * 
  *              ______                                 
- *             /     /                            ________________________________________________________________________________
- *            /     /                            /________________________________     __________________________________________/
+ *             /     /                           _________________________________________________________________________________
+ *            /     /                           /_________________________________     __________________________________________/
  *           /     /   ______   ____           ____    _____   ______________    /    /  _____         _____   _________________
  *          /     /   /      \  \   \         /   /   /____/  /    _________/   /    /  /    /        /    /  /    ____________/
  *         /     /   /   __   \  \   \       /   /   _____   /    /            /    /  /    /        /    /  /    /
@@ -182,8 +239,8 @@ namespace Server
  *      /     /   /   ________   \  \   \_/   /   /    /  /    /            /    /  /    /        /    /               /   /
  *     /     /   /   /        \   \  \       /   /    /  /    /_________   /    /  /    /________/    /  _____________/   /
  *    /     /   /___/          \___\  \_____/   /____/  /______________/  /____/  /__________________/  /________________/
- *   /     /_________________________________________________________________________________________________________________
- *  /________________________________________________________________________________________________________________________/
+ *   /     /____________________________________________________________________________________________________________
+ *  /__________________________________________________________________________________________________________________/
  * 
 */
 

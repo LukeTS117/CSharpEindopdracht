@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LibClient;
 
 namespace CSharpEindProduct.Views
 {
@@ -34,7 +35,17 @@ namespace CSharpEindProduct.Views
         {
             if(e.Key == Key.Enter)
             {
+                if(UserNameTextBox.Text.Length != 0)
+                {
+                    Client client = new Client(UserNameTextBox.Text);
+                    this.NavigationService.Navigate(new Lobby(client));
 
+                }
+
+                else
+                {
+                    LabelUsername.Text = "You must choose a name!";
+                }
             }
         }
     }
