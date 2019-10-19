@@ -9,7 +9,7 @@ namespace LibClient
 {
     public class Client
     {
-        private static string hostname = "192.168.178.117";
+        private static string hostname = "localhost";
         private static int port = 1337;
         bool done;
         public string Username { get; set; }

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LibClient;
+using System.IO;
 
 namespace CSharpEindProduct.Views
 {
@@ -35,11 +36,31 @@ namespace CSharpEindProduct.Views
         {
             if(e.Key == Key.Enter)
             {
-                if(UserNameTextBox.Text.Length != 0)
+                if (UserNameTextBox.Text.Length != 0)
                 {
-                    Client client = new Client(UserNameTextBox.Text);
-                    this.NavigationService.Navigate(new Lobby(client));
+                    using (StreamReader reader = File.OpenText("ForbiddenWords.txt"))
+                    {
+                        string s;
+                        bool isForbiddenWord = false;
+                        while ((s = reader.ReadLine()) != null)
+                        {
+                            if (UserNameTextBox.Text.Equals(s.ToLower()))
+                            {
+                                LabelUsername.Text = "That is a forbidden word!";
+                                isForbiddenWord = true;
+                                break;
+                            }
+                        }
 
+                        if (!isForbiddenWord)
+                        {
+                            Client client = new Client(UserNameTextBox.Text);
+                            this.NavigationService.Navigate(new Lobby(client));
+                        }
+                        
+
+
+                    }
                 }
 
                 else
