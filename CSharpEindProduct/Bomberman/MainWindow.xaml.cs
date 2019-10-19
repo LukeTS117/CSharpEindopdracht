@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bomberman.TmxParser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TiledSharp;
 
+
 namespace Bomberman
 {
     /// <summary>
@@ -25,6 +27,11 @@ namespace Bomberman
         public MainWindow()
         {
             InitializeComponent();
+            MapParser mapParser = new MapParser(@"C:\git\First Repo\CSharpEindopdracht\CSharpEindProduct\Bomberman\Map.tmx");
+
+            mapParser.parseTilesets();
+            
+            /*
             TmxMap map = new TmxMap("Map.tmx");
             List<coordinate> coords = new List<coordinate>();
             Button button = new Button();
@@ -63,9 +70,9 @@ namespace Bomberman
                 uniGrid.Children.Add(img);
                 
 
-            }
+            }*/
 
-       
+
         }
 
         public struct coordinate
