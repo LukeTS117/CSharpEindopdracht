@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerClient;
+using System;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace LibClient
         private static int port = 1337;
         bool done;
         public string Username { get; set; }
-
         TcpClient client;
 
         public Client(string username)
@@ -54,8 +54,10 @@ namespace LibClient
             switch (taggedmsg.tag)
             {
                 case Tag.msg:
-                    Console.WriteLine(taggedmsg.message);
+                   // Console.WriteLine(taggedmsg.message);
                     break;
+                case Tag.mts:
+
                 default:
                     Console.WriteLine("Something went Wrong in the Tag...");
                     Console.WriteLine(taggedmsg.tag);
@@ -64,14 +66,13 @@ namespace LibClient
             }
         }
 
-        private static void SendMessage(Tag tag, string message)
+        public void SendMessage(Tag tag, string message)
         {
+            NetworkStream nws = this.client.GetStream();
+            SendTaggedMessage(nws, tag, message);
 
         }
 
-        private static void SendMessage(Tag tag)
-        {
-
-        }
+        
     }
 }
