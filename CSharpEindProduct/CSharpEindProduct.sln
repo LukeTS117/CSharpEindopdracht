@@ -7,11 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpEindProduct", "CSharp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{497666BB-4762-4BE1-81D4-3B82892C301F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "ConsoleApp1\Client.csproj", "{948CCC75-ED3A-40CC-9562-0C42DEA67EC1}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ClientServer", "ClientServer\ClientServer.shproj", "{A7DA3A81-1896-4E02-B973-A13D1462A460}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibClient", "LibClient\LibClient.csproj", "{316E061C-BCF0-4D57-8C29-16F5EBA37DBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibClient", "LibClient\LibClient.csproj", "{316E061C-BCF0-4D57-8C29-16F5EBA37DBB}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -30,10 +28,6 @@ Global
 		{497666BB-4762-4BE1-81D4-3B82892C301F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{497666BB-4762-4BE1-81D4-3B82892C301F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{497666BB-4762-4BE1-81D4-3B82892C301F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{948CCC75-ED3A-40CC-9562-0C42DEA67EC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{948CCC75-ED3A-40CC-9562-0C42DEA67EC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{948CCC75-ED3A-40CC-9562-0C42DEA67EC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{948CCC75-ED3A-40CC-9562-0C42DEA67EC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{316E061C-BCF0-4D57-8C29-16F5EBA37DBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{316E061C-BCF0-4D57-8C29-16F5EBA37DBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{316E061C-BCF0-4D57-8C29-16F5EBA37DBB}.Release|Any CPU.ActiveCfg = Release|Any CPU

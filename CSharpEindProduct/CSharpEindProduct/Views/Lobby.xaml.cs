@@ -33,7 +33,7 @@ namespace CSharpEindProduct.Views
 
         private void AddSessionMouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+            client.SendMessage(ServerClient.ServerClient.Tag.cns, " ");
         }
     }
 }

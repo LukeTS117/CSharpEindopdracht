@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerClient;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net;
@@ -43,6 +44,7 @@ namespace Server
                 {
                     Player outPlayer;
                     currentlobby.TryRemove(player.ID, out outPlayer);
+                    SendTaggedMessage(player.Client.GetStream(), Tag.mts, SessionID.ToString());
                     ++iPlayers;
                 };
             }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServerClient
 {
-    class ServerClient
+    public class ServerClient
     {
         /* Data Protocol 
  * 
@@ -25,15 +25,15 @@ namespace ServerClient
  *     <nsl> = notify session list      (int sessionid, int playeramount)
  *     <npj> = notify player join       (int, string)
  *     <npl> = notify player left       (int)
+ *     <mts> = moved to session         (int)
  */
 
         public enum Tag
         {
             loc, dir, msg, bmb, exp, ded, sun, cns, jas,
 
-            nsl, npj, npl
+            nsl, npj, npl, mts
         }
-
 
         public struct TaggedMessage
         {
