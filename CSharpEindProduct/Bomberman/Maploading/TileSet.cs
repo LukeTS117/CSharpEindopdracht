@@ -11,23 +11,22 @@ namespace Bomberman.TmxParser
     class TileSet
     {
         public int firstgid;
-        /*public int lastgid;
+        public int lastgid;
         public string name;
-        public int tileWidth;*/
+        public int tileWidth;
         public string source;
-        /*public int tileHeight;
+        public int tileHeight;
         public int imageWidth;
         public int imageHeight;
         public Bitmap bitmapData;
         public int tileAmountWidth;
-        XmlDocument tsxFile;*/
+        XmlDocument tsxFile;
 
         public TileSet(int firstgid, string source)
         {
             this.firstgid = firstgid;
             this.source = source;
-            //tsxFile.Load(source);
-            
+            tsxFile.Load(source);            
         }
 
         
