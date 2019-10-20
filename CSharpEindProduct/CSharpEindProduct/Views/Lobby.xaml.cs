@@ -1,5 +1,4 @@
-﻿using CSharpEindProduct.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,22 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LibClient;
 
-namespace CSharpEindProduct
+namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Lobby.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Lobby : Page
     {
-        public MainWindow()
-        {
-            InitializeComponent();
 
-            MainFrame.NavigationService.Navigate(new Views.MenuView());
+        Client client;
+
+        public Lobby(Client client)
+        {
+            this.client = client;
+            InitializeComponent();
 
         }
 
-        
+        private void AddSessionMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            client.SendMessage(ServerClient.ServerClient.Tag.cns, " ");
+        }
     }
 }

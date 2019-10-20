@@ -1,5 +1,4 @@
-﻿using CSharpEindProduct.Views;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CSharpEindProduct
+namespace CSharpEindProduct.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Session.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Session : Page
     {
-        public MainWindow()
+        public Session()
         {
             InitializeComponent();
-
-            MainFrame.NavigationService.Navigate(new Views.MenuView());
-
         }
 
-        
+        private void StartButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

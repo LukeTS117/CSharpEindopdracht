@@ -1,0 +1,26 @@
+﻿<Page x:Class="CSharpEindProduct.Views.Session"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CSharpEindProduct.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      Title="Session">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/CSharpEindProduct;component/Resources/MenuBackground.jpg"/>
+        </Grid.Background>
+        <ListView x:Name="PlayerListview" HorizontalAlignment="Left" Height="505" Margin="797,134,-392,-189.4" VerticalAlignment="Top" Width="395" RenderTransformOrigin="1.12,-0.076" Background="Transparent">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Label Content="Players:" HorizontalAlignment="Left" Margin="797,84,0,0" VerticalAlignment="Top" FontFamily="Stencil" FontSize="30"/>
+        <Label Content="Start" HorizontalAlignment="Left" Margin="300,300,0,0" VerticalAlignment="Top" FontFamily="Stencil" FontSize="80" RenderTransformOrigin="0.457,0.317" MouseDown="StartButton_MouseDown"/>
+
+    </Grid>
+</Page>

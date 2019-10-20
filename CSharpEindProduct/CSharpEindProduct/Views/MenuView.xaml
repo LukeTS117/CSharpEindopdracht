@@ -1,0 +1,38 @@
+﻿<Page x:Class="CSharpEindProduct.Views.MenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CSharpEindProduct.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/CSharpEindProduct;component/Resources/MenuBackground.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <TextBlock HorizontalAlignment="Left" Margin="100,443,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.609,1.353" Height="32" Width="100" FontSize="30" FontFamily="Stencil" TextDecorations="{x:Null}" FontWeight="Bold" Cursor="Arrow" Foreground="Black" Text="Start" MouseDown="Button_Start_MouseDown">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform X="0.461" Y="-0.688"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="100,480,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.468,1.142" Height="35" Width="127" FontSize="30" FontFamily="Stencil" TextDecorations="{x:Null}" Cursor="Arrow" Foreground="Black" Text="Credits" PreviewMouseDown="TextBlock_PreviewMouseDown">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0"/>
+                    <TranslateTransform X="0.851" Y="0.083"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform></TextBlock>
+
+        <Image HorizontalAlignment="Left" Height="723" Margin="683,58,0,-61" VerticalAlignment="Top" Width="587" RenderTransformOrigin="0.754,0.284" Source="/CSharpEindProduct;component/Resources/kim_jong_un.png"/>
+        <TextBlock HorizontalAlignment="Left" Margin="100,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="151" Width="474" FontSize="50" FontFamily="Stencil" FontWeight="Bold" RenderTransformOrigin="0.51,0.844"><Run FontSize="70" Text="Bomberman:"/><LineBreak/><Run Foreground="#FF9D0000" FontWeight="Normal" Text="Avans"/><Run FontWeight="Normal" Text="ed Edition"/></TextBlock>
+
+
+
+    </Grid>
+</Page>
